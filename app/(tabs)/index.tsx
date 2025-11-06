@@ -3,6 +3,7 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import FoodScreen from '../screens/FoodScreen';
 import TechnologyScreen from '../screens/TechnologyScreen';
 import TravelingScreen from '../screens/TravelingScreen';
+import FoodFlashScreen from '../screens/FoodFlashScreen';
 
 export default function Main() {
   const [currentScreen, setCurrentScreen] = useState('welcome');
@@ -23,10 +24,15 @@ export default function Main() {
     }
   };
 
+  const navigateToFlashcards = () => {
+    setCurrentScreen('foodFlashcards');
+  };
+
+  if (currentScreen === 'food')return <FoodScreen navigateToFlashcards={navigateToFlashcards} />;
   if (currentScreen === 'welcome') return <WelcomeScreen navigateToCategory={navigateToCategory} />;
-  if (currentScreen === 'food') return <FoodScreen />;
   if (currentScreen === 'technology') return <TechnologyScreen />;
   if (currentScreen === 'traveling') return <TravelingScreen />;
+  if (currentScreen === 'foodFlashcards') return <FoodFlashScreen />;
 
   return null;
 }

@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
+interface FoodScreenProps {
+  navigateToFlashcards: () => void;
+}
 
 const { width, height } = Dimensions.get('window');
 
@@ -11,10 +16,11 @@ const WORDS = [
   { english: 'Cheese', chinese: '奶酪' },
 ];
 
-export default function FoodScreen() {
+export default function FoodScreen({ navigateToFlashcards }: FoodScreenProps) {
   const [score, setScore] = useState(0);
   const [target, setTarget] = useState(WORDS[Math.floor(Math.random() * WORDS.length)]);
   const [lanterns, setLanterns] = useState<any[]>([]);
+  const navigation = useNavigation();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -62,10 +68,25 @@ export default function FoodScreen() {
     setLanterns((prev) => prev.filter((l) => l.id !== id));
   };
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.target}>Match: {target.english}</Text>
-      <Text style={styles.score}>Score: {score}</Text>
+    return (
+        <View style={styles.container}>
+        <Text style={styles.target}>Match: {target.english}</Text>
+        <Text style={styles.score}>Score: {score}</Text>
+
+        <TouchableOpacity
+    style={{
+        marginTop: 20,
+        padding: 12,
+        backgroundColor: '#FFD700',
+        borderRadius: 8,
+        alignItems: 'center',
+    }}
+    onPress={navigateToFlashcards}
+    >
+    <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#000' }}>
+        View Flashcards
+    </Text>
+    </TouchableOpacity>
 
       {lanterns.map((lantern) => (
         <TouchableOpacity
